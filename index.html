@@ -1,1 +1,1783 @@
-hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPD Homologaciones - Homologación de Vehículos</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #b0db45;
+            --dark-color: #1a1a1a;
+            --light-color: #ffffff;
+            --gray-color: #f8f9fa;
+            --text-color: #333333;
+            --transition: all 0.3s ease;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --nav-bg: rgba(30, 30, 30, 0.85);
+            --nav-border: rgba(176, 219, 69, 0.5);
+        }
+
+        .dark-mode {
+            --light-color: #1a1a1a;
+            --gray-color: #2d2d2d;
+            --text-color: #f0f0f0;
+            --dark-color: #f0f0f0;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --nav-bg: rgba(20, 20, 20, 0.9);
+            --nav-border: rgba(176, 219, 69, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--light-color);
+            transition: var(--transition);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Dynamic Navigation */
+        header {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1100px;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 50px;
+            padding: 10px 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 0 0 1px var(--nav-border), 0 0 15px rgba(176, 219, 69, 0.3);
+            border: 1px solid var(--nav-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .logo {
+            height: 35px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 100%;
+            transition: var(--transition);
+            filter: brightness(1.2);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 12px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 6px 0;
+            text-shadow: 0 0 5px rgba(176, 219, 69, 0.3);
+        }
+
+        nav ul li a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(176, 219, 69, 0.7);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+            box-shadow: 0 0 5px var(--primary-color);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .phone {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px rgba(176, 219, 69, 0.3);
+        }
+
+        .phone:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+            text-shadow: 0 0 10px rgba(176, 219, 69, 0.7);
+        }
+
+        .phone i {
+            margin-right: 8px;
+            font-size: 0.9rem;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: var(--transition);
+            text-shadow: 0 0 5px rgba(176, 219, 69, 0.3);
+        }
+
+        .mobile-menu:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(176, 219, 69, 0.7);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('background.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            color: var(--light-color);
+            text-align: left;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            padding-top: 40px;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            font-weight: 700;
+            color: white !important;
+        }
+
+        .hero h1 .highlight {
+            color: var(--primary-color);
+        }
+
+        .hero h1 .comma {
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 35px;
+            opacity: 0.9;
+            max-width: 500px;
+            color: white !important;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid var(--primary-color);
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(176, 219, 69, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(176, 219, 69, 0.4);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .dark-mode .section-title p {
+            color: #aaa;
+        }
+
+        /* Advantages Section */
+        .advantages {
+            background-color: var(--gray-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advantages::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(176, 219, 69, 0.1) 0%, rgba(176, 219, 69, 0) 70%);
+            top: -150px;
+            right: -150px;
+        }
+
+        .advantages::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(176, 219, 69, 0.1) 0%, rgba(176, 219, 69, 0) 70%);
+            bottom: -100px;
+            left: -100px;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 1100px) {
+            .advantages-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .advantages-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .advantage-card {
+            background-color: var(--light-color);
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advantage-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), #8bc34a);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .advantage-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .advantage-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .advantage-icon {
+            font-size: 50px;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            transition: var(--transition);
+        }
+
+        .advantage-card:hover .advantage-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .advantage-card h3 {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .advantage-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .dark-mode .advantage-card p {
+            color: #aaa;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            background-color: var(--light-color);
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-image {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.1);
+        }
+
+        .service-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-overlay {
+            opacity: 1;
+        }
+
+        .service-content {
+            padding: 25px;
+        }
+
+        .service-content h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        /* About Section */
+        .about {
+            background-color: var(--gray-color);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-text h3 {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            color: var(--text-color);
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .about-text h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .about-text p {
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .about-features {
+            margin: 30px 0;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .about-feature i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-right: 15px;
+            margin-top: 3px;
+        }
+
+        .about-feature div h4 {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .about-stats {
+            display: flex;
+            justify-content: center;
+            margin-top: 60px;
+            text-align: center;
+            gap: 50px;
+        }
+
+        .stat {
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-text {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .dark-mode .stat-text {
+            color: #aaa;
+        }
+
+        /* Testimonials Section */
+        .testimonials-slider {
+            position: relative;
+            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .testimonials-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial {
+            min-width: 100%;
+            padding: 40px;
+            background-color: var(--light-color);
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            position: relative;
+        }
+
+        .testimonial::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 5rem;
+            color: var(--primary-color);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .testimonial-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 3px solid var(--primary-color);
+        }
+
+        .testimonial-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 0 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .slider-dot.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background-color: var(--light-color);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(176, 219, 69, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .dark-mode .form-note {
+            color: #aaa;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000;
+            color: #fff;
+            padding: 70px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-column ul li i {
+            margin-right: 10px;
+            color: var(--primary-color);
+            width: 20px;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: #fff;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .legal-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .legal-links a {
+            color: #999;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .legal-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: var(--light-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            transition: var(--transition);
+            font-size: 1.3rem;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 70px;
+            height: 70px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* Cookie Consent */
+        .cookie-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .cookie-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cookie-text {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .cookie-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .cookie-accept {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .cookie-reject {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .cookie-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Legal Pages */
+        .legal-page {
+            padding: 120px 0 80px;
+            background-color: var(--gray-color);
+            min-height: 100vh;
+        }
+
+        .legal-content {
+            background: var(--light-color);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .legal-content h1 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .legal-content h2 {
+            color: var(--text-color);
+            margin: 30px 0 15px;
+        }
+
+        .legal-content p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .legal-content ul {
+            margin: 15px 0 15px 30px;
+        }
+
+        .legal-content li {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1100px) {
+            .about-content {
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+            
+            .about-stats {
+                gap: 30px;
+            }
+            
+            .contact-form {
+                padding: 30px;
+            }
+            
+            .cookie-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .cookie-text {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background-color: var(--light-color);
+                transition: var(--transition);
+                padding: 100px 30px 30px;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+                border-radius: 0 20px 20px 0;
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .nav-container {
+                padding: 15px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .phone span {
+                display: none;
+            }
+            
+            header {
+                top: 15px;
+                width: 95%;
+            }
+            
+            .about-stats {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .legal-content {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.9rem;
+            }
+            
+            .advantage-card, .service-card, .testimonial {
+                padding: 30px 20px;
+            }
+            
+            .theme-toggle, .whatsapp-button {
+                width: 55px;
+                height: 55px;
+                font-size: 1.1rem;
+            }
+            
+            .whatsapp-button {
+                font-size: 28px;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+            
+            .contact-form {
+                padding: 20px;
+            }
+            
+            .cookie-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .cookie-btn {
+                width: 100%;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Cookie Consent -->
+    <div class="cookie-consent" id="cookieConsent">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <p>Utilizamos cookies propias y de terceros para mejorar nuestros servicios y mostrarle publicidad relacionada con sus preferencias mediante el análisis de sus hábitos de navegación. Si continúa navegando, consideramos que acepta su uso. Puede obtener más información en nuestra <a href="#politica-privacidad" style="color: var(--primary-color);">Política de Cookies</a>.</p>
+            </div>
+            <div class="cookie-buttons">
+                <button class="cookie-btn cookie-accept" id="acceptCookies">Aceptar</button>
+                <button class="cookie-btn cookie-reject" id="rejectCookies">Rechazar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dynamic Navigation -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="logo-2-2.avif" alt="CPD Homologaciones">
+            </div>
+            
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#services">Servicios</a></li>
+                    <li><a href="#about">Quiénes Somos</a></li>
+                    <li><a href="#testimonials">Testimonios</a></li>
+                    <li><a href="#contact-form">Contacto</a></li>
+                </ul>
+            </nav>
+            
+            <div class="contact-info">
+                <a href="tel:+34648087196" class="phone">
+                    <i class="fas fa-phone"></i>
+                    <span>+34 648 087 196</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 id="slogan">Si puedes <span class="highlight">soñarlo<span class="comma">,</span></span> podemos <span class="highlight">homologarlo</span></h1>
+                <p>Gestiona la homologación de tu vehículo en línea, rápido y fácil.</p>
+                <a href="#contact-form" class="btn">Contáctanos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages Section -->
+    <section class="advantages">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ventajas de homologar con CPD Homologaciones</h2>
+            </div>
+            
+            <div class="advantages-grid">
+                <div class="advantage-card fade-in">
+                    <div class="advantage-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3>Mejores precios del mercado</h3>
+                    <p>Homologa tu vehículo al mejor precio sin comprometer la calidad. Garantizamos el mejor valor por tu inversión.</p>
+                </div>
+                
+                <div class="advantage-card fade-in">
+                    <div class="advantage-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Rapidez y eficacia 100% online</h3>
+                    <p>Agilizamos tu homologación para que puedas disfrutar de tu vehículo cuanto antes, gestionando todo el proceso desde tu hogar.</p>
+                </div>
+                
+                <div class="advantage-card fade-in">
+                    <div class="advantage-icon">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <h3>Atención personalizada y asesoría técnica</h3>
+                    <p>Te ofrecemos un trato cercano y asesoría especializada durante todo el proceso de homologación.</p>
+                </div>
+                
+                <div class="advantage-card fade-in">
+                    <div class="advantage-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Experiencia y especialización</h3>
+                    <p>Con años de experiencia y más de 1.000 homologaciones realizadas, somos referentes en el sector.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Servicios profesionales de homologación</h2>
+                <p>100% Online y al mejor precio</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-image">
+                        <img src="https://github.com/cpdhomologaciones/CPD-Homologaciones.github.io/blob/main/VEHICULOS/Turismo.png?raw=true" alt="Turismos">
+                        <div class="service-overlay">
+                            <a href="/INFO_VEHICULOS/Turismo/Turismo.html" class="btn">Más información</a>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Turismos</h3>
+                        <p>Homologación completa para todo tipo de turismos, nacionales e importados.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-image">
+                        <img src="https://github.com/cpdhomologaciones/CPD-Homologaciones.github.io/blob/main/VEHICULOS/moto.png?raw=true" alt="Motocicletas">
+                        <div class="service-overlay">
+                            <a href="motocicletas.html" class="btn">Más información</a>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Motocicletas</h3>
+                        <p>Homologamos todo tipo de motocicletas, desde scooters hasta motos de alta cilindrada.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-image">
+                        <img src="https://github.com/cpdhomologaciones/CPD-Homologaciones.github.io/blob/main/VEHICULOS/todoterreno.png?raw=true" alt="Todoterrenos">
+                        <div class="service-overlay">
+                            <a href="todoterrenos.html" class="btn">Más información</a>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Todoterrenos</h3>
+                        <p>Especialistas en la homologación de vehículos todoterreno y 4x4 de cualquier origen.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-image">
+                        <img src="https://github.com/cpdhomologaciones/CPD-Homologaciones.github.io/blob/main/VEHICULOS/Autocaravana.png?raw=true" alt="Furgones vivienda">
+                        <div class="service-overlay">
+                            <a href="furgones.html" class="btn">Más información</a>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Furgones vivienda</h3>
+                        <p>Homologación completa para furgonetas camper y vehículos adaptados como vivienda.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-image">
+                        <img src="https://github.com/cpdhomologaciones/CPD-Homologaciones.github.io/blob/main/VEHICULOS/hormigon.png?raw=true" alt="Vehículos industriales y agrícolas">
+                        <div class="service-overlay">
+                            <a href="industriales.html" class="btn">Más información</a>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Vehículos industriales y agrícolas</h3>
+                        <p>Homologamos maquinaria agrícola, vehículos industriales y de trabajo de todo tipo.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-image">
+                        <img src="https://github.com/cpdhomologaciones/CPD-Homologaciones.github.io/blob/main/VEHICULOS/importaciones.png?raw=true" alt="Importaciones">
+                        <div class="service-overlay">
+                            <a href="importaciones.html" class="btn">Más información</a>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Importaciones</h3>
+                        <p>Gestionamos la homologación de vehículos importados de cualquier país y marca.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>¿Quiénes Somos?</h2>
+            </div>
+            
+            <div class="about-content fade-in">
+                <div class="about-text">
+                    <p>En <strong>CPD Homologaciones</strong> somos un equipo de <strong>ingenieros especializados</strong> en homologaciones de vehículos. Con sede en Santa Cruz de Tenerife, ofrecemos servicios a <strong>nivel nacional</strong>, gestionando homologaciones de todo tipo de vehículos con total garantía y profesionalismo.</p>
+                    
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Metodología de trabajo</h4>
+                                <p>Ofrecemos un proceso <strong>totalmente transparente</strong>, desde la asesoría técnica inicial hasta la homologación final. Cada paso está documentado y comunicado.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="about-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Experiencia y Alcance Nacional</h4>
+                                <p>A lo largo de nuestra trayectoria, hemos trabajado con <strong>casi todas las ITV de España</strong>, homologando vehículos de diversas categorías y orígenes.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="about-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Compromiso con el cliente</h4>
+                                <p>Nos enfocamos en ofrecer soluciones personalizadas, adaptándonos a las necesidades específicas de cada cliente y tipo de vehículo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-stats">
+                    <div class="stat">
+                        <span class="stat-number" data-target="1275">0</span>
+                        <span class="stat-text">Homologaciones realizadas</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" data-target="14">0</span>
+                        <span class="stat-text">Años de experiencia</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" data-target="97">0</span>
+                        <span class="stat-text">% Clientes satisfechos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Testimonios de Nuestros Clientes</h2>
+            </div>
+            
+            <div class="testimonials-slider">
+                <div class="testimonials-container">
+                    <div class="testimonial fade-in">
+                        <div class="testimonial-image">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente">
+                        </div>
+                        <p class="testimonial-text">"Excelente servicio, muy profesionales y rápidos. Homologaron mi coche importado sin problemas. El proceso fue transparente y me mantuvieron informado en todo momento. Totalmente recomendables."</p>
+                        <p class="testimonial-author">- Carlos Rodríguez</p>
+                    </div>
+                    
+                    <div class="testimonial fade-in">
+                        <div class="testimonial-image">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente">
+                        </div>
+                        <p class="testimonial-text">"Necesitaba homologar mi furgoneta camper y lo hicieron todo online. Muy contenta con el trato y el resultado. Resolvieron todas mis dudas rápidamente y el proceso fue más sencillo de lo que esperaba."</p>
+                        <p class="testimonial-author">- Marta López</p>
+                    </div>
+                    
+                    <div class="testimonial fade-in">
+                        <div class="testimonial-image">
+                            <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Cliente">
+                        </div>
+                        <p class="testimonial-text">"Llevo años confiando en CPD para todas las homologaciones de mi flota de vehículos industriales. Siempre impecables, con precios competitivos y un servicio rápido. Son los mejores en lo que hacen."</p>
+                        <p class="testimonial-author">- Javier Méndez</p>
+                    </div>
+                </div>
+                
+                <div class="slider-controls">
+                    <div class="slider-dot active" data-index="0"></div>
+                    <div class="slider-dot" data-index="1"></div>
+                    <div class="slider-dot" data-index="2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact-form">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contáctanos</h2>
+                <p>Completa el formulario y nos pondremos en contacto contigo lo antes posible</p>
+            </div>
+            
+            <div class="contact-form fade-in">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Nombre *</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Número de teléfono</label>
+                        <input type="tel" id="phone" name="phone" class="form-control">
+                        <div class="form-note">Opcional</div>
+                        <div class="error-message" id="phoneError">Formato de teléfono inválido</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico *</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Mensaje *</label>
+                        <textarea id="message" name="message" class="form-control" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%;">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CPD Homologaciones</h3>
+                    <p>Especialistas en homologación de vehículos con años de experiencia y más de 1.000 homologaciones realizadas en toda España.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/cpd_homologaciones/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#home">Inicio</a></li>
+                        <li><a href="#services">Servicios</a></li>
+                        <li><a href="#about">Quiénes Somos</a></li>
+                        <li><a href="#testimonials">Testimonios</a></li>
+                        <li><a href="#contact-form">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Servicios</h3>
+                    <ul>
+                        <li><a href="turismos.html">Turismos</a></li>
+                        <li><a href="motocicletas.html">Motocicletas</a></li>
+                        <li><a href="todoterrenos.html">Todoterrenos</a></li>
+                        <li><a href="furgones.html">Furgones Vivienda</a></li>
+                        <li><a href="industriales.html">Vehículos Industriales</a></li>
+                        <li><a href="importaciones.html">Importaciones</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Santa Cruz de Tenerife, España</li>
+                        <li><i class="fas fa-envelope"></i> cpdhomologaciones@gmail.com</li>
+                        <li><i class="fab fa-whatsapp"></i> +34 648 087 196</li>
+                        <li><i class="fab fa-instagram"></i> cpd_homologaciones</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 CPD Homologaciones. Todos los derechos reservados.</p>
+                <div class="legal-links">
+                    <a href="#aviso-legal">Aviso Legal</a>
+                    <a href="#politica-privacidad">Política de Privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/34648087196" class="whatsapp-button" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const nav = document.querySelector('nav');
+        
+        mobileMenu.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            mobileMenu.querySelector('i').classList.toggle('fa-bars');
+            mobileMenu.querySelector('i').classList.toggle('fa-times');
+        });
+        
+        // Close mobile menu when clicking on a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                mobileMenu.querySelector('i').classList.add('fa-bars');
+                mobileMenu.querySelector('i').classList.remove('fa-times');
+            });
+        });
+        
+        // Testimonials Slider
+        const testimonialsContainer = document.querySelector('.testimonials-container');
+        const dots = document.querySelectorAll('.slider-dot');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            testimonialsContainer.style.transform = `translateX(-${index * 100}%)`;
+            
+            // Update active dot
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+        
+        // Add click events to dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+        
+        // Auto slide
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % dots.length;
+            showSlide(currentSlide);
+        }, 6000);
+        
+        // Theme Toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+        
+        // Check for saved theme preference or respect OS setting
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const currentTheme = localStorage.getItem('theme');
+        
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            body.classList.add('dark-mode');
+            themeToggle.querySelector('i').classList.remove('fa-moon');
+            themeToggle.querySelector('i').classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            // Change icon and save preference
+            const icon = themeToggle.querySelector('i');
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const navContainer = document.querySelector('.nav-container');
+            
+            if (window.scrollY > 50) {
+                navContainer.style.transform = 'scale(0.95)';
+                navContainer.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1), 0 0 0 1px var(--nav-border), 0 0 15px rgba(176, 219, 69, 0.3)';
+            } else {
+                navContainer.style.transform = 'scale(1)';
+                navContainer.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1), 0 0 0 1px var(--nav-border), 0 0 15px rgba(176, 219, 69, 0.3)';
+            }
+        });
+        
+        // WhatsApp link adjustment for desktop/mobile
+        const whatsappButton = document.querySelector('.whatsapp-button');
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            // Mobile device
+            whatsappButton.href = 'https://wa.me/34648087196';
+        } else {
+            // Desktop device
+            whatsappButton.href = 'https://web.whatsapp.com/send?phone=34648087196';
+        }
+        
+        // Phone number click handler
+        const phoneLink = document.querySelector('.phone');
+        phoneLink.addEventListener('click', function(e) {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // Mobile device - allow default behavior (call)
+                return true;
+            } else {
+                // Desktop device - redirect to WhatsApp Web
+                e.preventDefault();
+                window.open('https://web.whatsapp.com/send?phone=34648087196', '_blank');
+            }
+        });
+        
+        // Phone number validation
+        const phoneInput = document.getElementById('phone');
+        const phoneError = document.getElementById('phoneError');
+        
+        phoneInput.addEventListener('input', function() {
+            const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/;
+            if (this.value && !phoneRegex.test(this.value)) {
+                phoneError.style.display = 'block';
+            } else {
+                phoneError.style.display = 'none';
+            }
+        });
+        
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate phone number if provided
+            if (phoneInput.value && phoneError.style.display === 'block') {
+                alert('Por favor, corrige el número de teléfono antes de enviar el formulario.');
+                return;
+            }
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                phone: phoneInput.value || 'No proporcionado',
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Send to Telegram bot
+            sendToTelegram(formData);
+            
+            // Show success message
+            alert('¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.');
+            contactForm.reset();
+        });
+        
+        // Function to send data to Telegram
+        function sendToTelegram(data) {
+            const botToken = '8384363255:AAFwEZl8Jg5huD1fHB2PxWwFQoxVfk0MWN0';
+            const chatId = '7940680246';
+            
+            const message = `
+📧 *Nuevo mensaje de contacto* 📧
+
+*Nombre:* ${data.name}
+*Teléfono:* ${data.phone}
+*Email:* ${data.email}
+
+*Mensaje:*
+${data.message}
+
+*Enviado desde:* CPD Homologaciones Website
+            `;
+            
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Message sent to Telegram:', data);
+            })
+            .catch(error => {
+                console.error('Error sending message to Telegram:', error);
+            });
+        }
+        
+        // Animate numbers when scrolling to about section
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                element.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        // Scroll animation for elements
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate numbers if it's the about section
+                    if (entry.target.classList.contains('about-content')) {
+                        const stats = document.querySelectorAll('.stat-number');
+                        stats.forEach(stat => {
+                            const target = parseInt(stat.getAttribute('data-target'));
+                            animateValue(stat, 0, target, 3000); // Increased duration for slower animation
+                        });
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        fadeElements.forEach(el => {
+            fadeInObserver.observe(el);
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const rejectCookies = document.getElementById('rejectCookies');
+        
+        // Show cookie consent if not already accepted/rejected
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookieConsent.style.display = 'block';
+            }, 1000);
+        }
+        
+        // Accept cookies
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieConsent.style.display = 'none';
+        });
+        
+        // Reject cookies
+        rejectCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieConsent.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
